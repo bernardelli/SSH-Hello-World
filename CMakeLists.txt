@@ -20,4 +20,4 @@ LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_20,code=sm_20)
 LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30)
 LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_35,code=sm_35)
 
-TARGET_LINK_LIBRARIES(SSH-Hello-World /usr/local/cuda-7.5/lib64/libcudart.so)
+TARGET_LINK_LIBRARIES(/usr/local/cuda-7.5/lib64/libcudart.so)
