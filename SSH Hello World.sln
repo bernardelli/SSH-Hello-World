@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SSH Hello World", "SSH Hell
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A20735C2-9119-420E-AA23-64EB4745CCBE}"
 	ProjectSection(SolutionItems) = preProject
-		build-cuda.cmake = build-cuda.cmake
+		CMakeLists.txt = CMakeLists.txt
 	EndProjectSection
 EndProject
 Global
