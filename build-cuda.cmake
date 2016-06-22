@@ -24,9 +24,8 @@ link_directories(
 # For compilation ...
 # Specify target & source files to compile it from
 cuda_add_executable(
-    hellocuda
-    kernel.cu
-    hellocuda.h
+    "SSH Hello World/kernel"
+    "SSH Hello World/kernel.cu"
     #kernels/hellokernels.cu
     #kernels/hellokernels.h
     #utility/wrapper.cpp
