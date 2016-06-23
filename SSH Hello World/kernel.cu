@@ -30,7 +30,7 @@ int main()
     // Add vectors in parallel.
     cudaError_t cudaStatus = addWithCuda(c, a, b, arraySize);
     if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "addWithCuda failed!");
+        fprintf(stderr, "addWithCuda failed!\n");
         return 1;
     }
 
@@ -41,7 +41,7 @@ int main()
     // tracing tools such as Nsight and Visual Profiler to show complete traces.
     cudaStatus = cudaDeviceReset();
     if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "cudaDeviceReset failed!");
+        fprintf(stderr, "cudaDeviceReset failed!\n");
         return 1;
     }
 
@@ -59,7 +59,7 @@ cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size)
     // Choose which GPU to run on, change this on a multi-GPU system.
     cudaStatus = cudaSetDevice(0);
     if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+        fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?\n");
         goto Error;
     }
 
