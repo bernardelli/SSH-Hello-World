@@ -6,14 +6,15 @@ void checkingDevices()
 	cudaError_t cudaStatus = cudaGetDeviceCount(&deviceCount);
 	
 	if (cudaStatus == cudaErrorInsufficientDriver) {
-		fprintf(stderr, "cudaGetDeviceCount failed!  Do you have CUDA installed?");
+		fprintf(stderr, "cudaGetDeviceCount failed!  Do you have CUDA installed?\n");
 	}
 	
 	int device;
 	for (device = 0; device < deviceCount; ++device) {
 		cudaDeviceProp deviceProp;
 		cudaGetDeviceProperties(&deviceProp, device);
-		printf("Device %d has compute capability %d.%d and concurrentKernels = %d.\n",
+		
+		if(device<100) printf("Device %d has compute capability %d.%d and concurrentKernels = %d.\n",
 			device, deviceProp.major, deviceProp.minor, deviceProp.concurrentKernels);
 	}
 	cudaDeviceReset();

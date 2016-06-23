@@ -56,8 +56,10 @@ int main(int argc, char **argv)
 	
 
 	//copyMakeBorder(image, image, sigma_xy / 2, sigma_xy / 2, sigma_xy / 2, sigma_xy / 2, IPL_BORDER_CONSTANT, 0);
+#ifndef __linux__	
 	cv::namedWindow("Original image", cv::WINDOW_AUTOSIZE);
 	cv::imshow("Original image", image);
+#endif
 	image.convertTo(image, CV_32F);
 	image_size = image.rows*image.cols;
 	size = image_size * 256;
@@ -73,7 +75,7 @@ int main(int argc, char **argv)
 	********************************************************************************/
 	cudaStatus = cudaSetDevice(0);
 	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?\n");
 	}
 	
 	
@@ -89,7 +91,7 @@ int main(int argc, char **argv)
 	cudaStatus = allocateGpuMemory(&dev_image, image_size);
 	
 	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMalloc failed!");
+		fprintf(stderr, "cudaMalloc failed!\n");
 	}
 	
 
@@ -105,7 +107,7 @@ int main(int argc, char **argv)
 	cudaStatus = copyToGpuMem(dev_kernel_eps, kernel_eps, kernel_eps_size);
 	cudaStatus = cudaMemcpy(dev_image, image.ptr(), image_size*sizeof(float), cudaMemcpyHostToDevice);////copyToGpuMem(dev_image,(float*) image.ptr(), size); //only works with raw function!
 	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMemcpy failed!");
+		fprintf(stderr, "cudaMemcpy failed!\n");
 	}
 	
 
@@ -147,10 +149,11 @@ int main(int argc, char **argv)
 	/********************************************************************************
 	*** show filtered image and save image                                        ***
 	********************************************************************************/
-	
+#ifndef __linux__	
 	cv::namedWindow("Filtered image", cv::WINDOW_AUTOSIZE);
 
 	cv::imshow("Filtered image", output_imag/256);
+#endif
 	cv::imwrite("Result.bmp", output_imag);
 	cv::waitKey(0);
 	free(result_image); //needs to be freed after using output_imag
@@ -161,7 +164,7 @@ int main(int argc, char **argv)
 	********************************************************************************/
     cudaStatus = cudaDeviceReset();
     if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "cudaDeviceReset failed!");
+        fprintf(stderr, "cudaDeviceReset failed!\n");
         return 1;
     }
 	

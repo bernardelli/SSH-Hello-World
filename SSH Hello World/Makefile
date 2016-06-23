@@ -2,7 +2,10 @@ NVCC := nvcc
 CXX  := g++ 
 INCD := -I"/scratch-local/usr/include" -I"/usr/local/cuda-7.5/include"
 
-#LIBS := -L"/usr/local/cuda-7.5/lib64" -L"/scratch-local/usr/lib64"
+LIBS := -L"/usr/local/cuda-7.5/lib64" -L"/scratch-local/usr/lib"
+
+
+#/scratch-local/usr/include/
 
 CPP_SOURCES := main.cpp
 CU_SOURCES  := convolution.cu \
