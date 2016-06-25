@@ -45,6 +45,11 @@ build/
 *.pidb
 *.log
 *.scc
+*.cu_o
+*.vcxproj
+*.vcxproj.filters
+*.o
+
 
 # Visual C++ cache files
 ipch/

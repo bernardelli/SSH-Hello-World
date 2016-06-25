@@ -1,9 +1,14 @@
-NVCC := nvcc
+NVCC := /opt/cuda/bin/nvcc
 CXX  := g++ 
-INCD := -I"/scratch-local/usr/include" -I"/usr/local/cuda-7.5/include"
+INCD := -I"/scratch-local/usr/include" -I"/opt/cuda/include"
 
-LIBS := -L"/usr/local/cuda-7.5/lib64" -L"/scratch-local/usr/lib"
+LIBS := -L"/opt/cuda/lib64" -L"/scratch-local/usr/lib"
 
+export PKG_CONFIG_PATH  := /scratch-local/usr/lib64/pkgconfig/
+export PATH             := /opt/cuda/bin:$(PATH)
+export LD_LIBRARY_PATH  := /scratch-local/usr/lib/:$(LD_LIBRARY_PATH)
+
+SHELL := env PATH=$(PATH) /bin/bash
 
 #/scratch-local/usr/include/
 
@@ -25,7 +30,7 @@ CU_OBJS     := $(patsubst %.cu, %.cu_o, $(CU_SOURCES))
 	$(NVCC) -w $(NVCCFLAGS) -c $(INCD) $(LIBS) -o $@ $<
 
 %.o: %.cpp
-	$(CXX) -g -lcudart `pkg-config --libs opencv` `pkg-config --cflags opencv` -c $(CXXFLAGS) $(INCD) $(LIBS) -o $@ $<
+	$(CXX) -lcudart `pkg-config --libs opencv` `pkg-config --cflags opencv` -c $(CXXFLAGS) $(INCD) $(LIBS) -o $@ $<
 
 hello: $(CPP_OBJS) $(CU_OBJS)
 	$(CXX) -o hello $(CU_OBJS) $(CPP_OBJS) $(LDFLAGS) $(INCD) $(LIBS)  `pkg-config --libs opencv` `pkg-config --cflags opencv`

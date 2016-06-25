@@ -7,6 +7,7 @@ void checkingDevices()
 	
 	if (cudaStatus == cudaErrorInsufficientDriver) {
 		fprintf(stderr, "cudaGetDeviceCount failed!  Do you have CUDA installed?\n");
+		exit(1);
 	}
 	
 	int device;
