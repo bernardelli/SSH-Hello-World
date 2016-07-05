@@ -49,6 +49,8 @@ build/
 *.vcxproj
 *.vcxproj.filters
 *.o
+hello
+*.bmp
 
 
 # Visual C++ cache files
