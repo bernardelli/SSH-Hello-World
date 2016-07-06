@@ -4,6 +4,8 @@ INCD := -I"/scratch-local/usr/include" -I"/opt/cuda/include"
 
 LIBS := -L"/opt/cuda/lib64" -L"/scratch-local/usr/lib"
 
+CFLAGS += -std=c++11 -pg -D_DEBUG -g
+
 export PKG_CONFIG_PATH  := /scratch-local/usr/lib64/pkgconfig/
 export PATH             := /opt/cuda/bin:$(PATH)
 export LD_LIBRARY_PATH  := /scratch-local/usr/lib/:$(LD_LIBRARY_PATH)
@@ -30,10 +32,10 @@ CU_OBJS     := $(patsubst %.cu, %.cu_o, $(CU_SOURCES))
 	$(NVCC) -w $(NVCCFLAGS) -c $(INCD) $(LIBS) -o $@ $<
 
 %.o: %.cpp
-	$(CXX) -lcudart `pkg-config --libs opencv` `pkg-config --cflags opencv` -c $(CXXFLAGS) $(INCD) $(LIBS) -o $@ $<
+	$(CXX) $(CFLAGS) -lcudart `pkg-config --libs opencv` `pkg-config --cflags opencv` -c $(CXXFLAGS) $(INCD) $(LIBS) -o $@ $<
 
 hello: $(CPP_OBJS) $(CU_OBJS)
-	$(CXX) -o hello $(CU_OBJS) $(CPP_OBJS) $(LDFLAGS) $(INCD) $(LIBS)  `pkg-config --libs opencv` `pkg-config --cflags opencv`
+	$(CXX) $(CFLAGS) -o hello $(CU_OBJS) $(CPP_OBJS) $(LDFLAGS) $(INCD) $(LIBS)  `pkg-config --libs opencv` `pkg-config --cflags opencv`
 
 clean:
 	rm -f hello *.o *.cu_o

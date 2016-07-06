@@ -8,6 +8,7 @@ void __syncthreads();
 
 #include <math.h>
 #include <iostream>
+#include <time.h>
 
 // Shared Library Test Functions
 //#include <helper_functions.h>  // CUDA SDK Helper functions
