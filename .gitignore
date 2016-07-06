@@ -51,7 +51,7 @@ build/
 *.o
 hello
 *.bmp
-
+*.out
 
 # Visual C++ cache files
 ipch/
