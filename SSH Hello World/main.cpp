@@ -82,13 +82,13 @@ int main(int argc, char **argv)
 	
 	char filename[40];
 	time_t now = time(NULL);
-	sprintf(filename, "image_size: %d, kernel_eps_size: %d.txt", image.rows, kernel_eps_size);
+	sprintf(filename, "image_size_%d__kernel_eps_size_%d.txt", image.rows, kernel_eps_size);
 	FILE* output_file = fopen(filename, "w");
 
 
 
 	fprintf(output_file,"image_size: %d, kernel_eps_size: %d\nelapsed_seconds\tkernel_xy_size\n", image.rows, kernel_eps_size);
-	for(int i = 0; i < 31; i+=5){
+	for(int i = 0; i < 50; i+=3){
 		
 	    	for(int k = 0; k < 10; k++){
 			std::chrono::time_point<std::chrono::system_clock> start, end;
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
 
 			std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 		 	
-			if (i) fprintf(output_file,"%f\t%d\n",elapsed_seconds,kernel_xy_size);
+			if (i) fprintf(output_file,"%f\t%d\r\n",elapsed_seconds,kernel_xy_size);
 		}
 	}
 	
