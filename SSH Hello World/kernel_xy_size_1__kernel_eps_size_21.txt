@@ -1,2 +1,0 @@
-kernel_xy_size: 1, kernel_eps_size: 21
-elapsed_seconds	kernel_xy_size
