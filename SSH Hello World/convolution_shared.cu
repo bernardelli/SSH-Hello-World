@@ -128,7 +128,7 @@ void callingConvolution_shared(float *dev_cube_wi_out, float *dev_cube_w_out, fl
 
 	//TODO: intitialize this on main
 	cudaDeviceProp deviceProp;
-	cudaGetDeviceProperties(&deviceProp, 0); // device = 0;
+	cudaGetDeviceProperties(&deviceProp, 2); // device = 0;
 
 
 

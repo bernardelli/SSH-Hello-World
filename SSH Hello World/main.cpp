@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	/********************************************************************************
 	*** choose which GPU to run on, change this on a multi-GPU system             ***
 	********************************************************************************/
-	cudaStatus = cudaSetDevice(0);
+	cudaStatus = cudaSetDevice(2);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?\n");
 	}
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		float sigma_xy = i;
 		kernel_xy_size = 1+2*i;
 		char filename[40];
-		sprintf(filename, "kernel_xy_size_%d__kernel_eps_size_%d.txt", kernel_xy_size, kernel_eps_size);
+		sprintf(filename, "%s_kernel_xy_size_%d__kernel_eps_size_%d.txt",deviceProp.name, kernel_xy_size, kernel_eps_size);
 		FILE* output_file = fopen(filename, "w");
 		fprintf(output_file,"kernel_xy_size: %d, kernel_eps_size: %d\nelapsed_seconds\tkernel_xy_size\n", kernel_xy_size, kernel_eps_size);
 		
