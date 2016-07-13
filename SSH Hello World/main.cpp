@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 			
 			
 		char filename[40];
-		sprintf(filename, "%s_image_size_%d__kernel_eps_size_%d.txt", deviceProp.name, image.rows, kernel_eps_size);
+		sprintf(filename, "image_size_%d__kernel_eps_size_%d.txt", image.rows, kernel_eps_size);
 		FILE* output_file = fopen(filename, "w");
 		fprintf(output_file,"kernel_xy_size: %d, kernel_eps_size: %d\nelapsed_seconds\tkernel_xy_size\n", kernel_xy_size, kernel_eps_size);
 		
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 
 				std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 			 	
-				if (i) fprintf(output_file,"%f\t%d\r\n",elapsed_seconds,image.rows);
+				if (i) fprintf(output_file,"%f\t%d\r\n",elapsed_seconds, kernel_xy_size);
 			}
 			
 		}
