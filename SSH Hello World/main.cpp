@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 	define_kernel(kernel_eps, sigma_eps, kernel_eps_size);
 	
 	
-	int device = 2;
+	int device = 1;
 	cudaDeviceProp deviceProp;
 	cudaGetDeviceProperties(&deviceProp, device);
 	
@@ -175,6 +175,7 @@ int main(int argc, char **argv)
 				std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 			 	
 				if (i) fprintf(output_file,"%f\t%d\r\n",elapsed_seconds, kernel_xy_size);
+				
 			}
 			
 		}
@@ -191,11 +192,12 @@ int main(int argc, char **argv)
 	cv::namedWindow("Filtered image", cv::WINDOW_AUTOSIZE);
 
 	cv::imshow("Filtered image", output_imag/256);
-
-	cv::imwrite("Result.bmp", output_imag);
-	cv::waitKey(0);
 	free(result_image); //needs to be freed after using output_imag
+	cv::imwrite("Result.bmp", output_imag);
 #endif	
+	
+	cv::waitKey(0);
+
 	/********************************************************************************
 	*** cudaDeviceReset must be called before exiting in order for profiling and  ***
     *** tracing tools such as Nsight and Visual Profiler to show complete traces. ***

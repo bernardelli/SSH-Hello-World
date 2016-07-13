@@ -15,8 +15,8 @@ void checkingDevices()
 		cudaDeviceProp deviceProp;
 		cudaGetDeviceProperties(&deviceProp, device);
 		
-		if(device<100) printf("Device %d has compute capability %d.%d and concurrentKernels = %d.\n",
-			device, deviceProp.major, deviceProp.minor, deviceProp.concurrentKernels);
+		if(device<100) printf("Device %d with name %s has compute capability %d.%d and concurrentKernels = %d.\n",
+			device, deviceProp.name, deviceProp.major, deviceProp.minor, deviceProp.concurrentKernels);
 	}
 	cudaDeviceReset();
 
