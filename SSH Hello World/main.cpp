@@ -43,13 +43,16 @@ int main(int argc, char **argv)
 	kernel_eps_size = 21;
 	kernel_eps = (float*)malloc(kernel_eps_size*sizeof(float));
 	define_kernel(kernel_eps, sigma_eps, kernel_eps_size);
-
 	
+	
+	int device = 2;
+	cudaDeviceProp deviceProp;
+	cudaGetDeviceProperties(&deviceProp, device);
 	
 	/********************************************************************************
 	*** choose which GPU to run on, change this on a multi-GPU system             ***
 	********************************************************************************/
-	cudaStatus = cudaSetDevice(2);
+	cudaStatus = cudaSetDevice(device);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?\n");
 	}
@@ -64,19 +67,24 @@ int main(int argc, char **argv)
 		std::cerr << "Could not open or find \"lena.bmp\"." << std::endl;
 		return 1;
 	}
-	for(int i = 0; i < 50; i+=3){
-		printf("i:%d\n", i);
-		float sigma_xy = i;
-		kernel_xy_size = 1+2*i;
+	
+	
+	for (float j = 0.1; j <= 1.09; j+=0.1){
+			printf("j=%f\n",j);
+			cv::resize(image2, image, cv::Size(image2.cols * j, image2.rows * j), 0, 0, CV_INTER_LINEAR);
+			image.convertTo(image, CV_32F);
+			image_size = image.rows*image.cols;
+			size = image_size * 256;
+			dim3 dimensions = dim3(image.rows, image.cols, 256);
+			
+			
 		char filename[40];
-		sprintf(filename, "%s_kernel_xy_size_%d__kernel_eps_size_%d.txt",deviceProp.name, kernel_xy_size, kernel_eps_size);
+		sprintf(filename, "%s_image_size_%d__kernel_eps_size_%d.txt", deviceProp.name, image.rows, kernel_eps_size);
 		FILE* output_file = fopen(filename, "w");
 		fprintf(output_file,"kernel_xy_size: %d, kernel_eps_size: %d\nelapsed_seconds\tkernel_xy_size\n", kernel_xy_size, kernel_eps_size);
 		
-
-		for (float j = 0.1; j <= 1.09; j+=0.1){
-			//printf("j=%f\n",j);
-			cv::resize(image2, image, cv::Size(image2.cols * j, image2.rows * j), 0, 0, CV_INTER_LINEAR);
+	
+		
 
 			//copyMakeBorder(image, image, sigma_xy / 2, sigma_xy / 2, sigma_xy / 2, sigma_xy / 2, IPL_BORDER_CONSTANT, 0);
 	#ifndef __linux__	
@@ -84,12 +92,12 @@ int main(int argc, char **argv)
 			cv::imshow("Original image", image);
 	#endif
 
+	for(int i = 0; i < 50; i+=3){
+	//	printf("i:%d\n", i);
+		float sigma_xy = i;
+		kernel_xy_size = 1+2*i;
 	
-	
-			image.convertTo(image, CV_32F);
-			image_size = image.rows*image.cols;
-			size = image_size * 256;
-			dim3 dimensions = dim3(image.rows, image.cols, 256);
+			
 
 		    	for(int k = 0; k < 10; k++){
 				std::chrono::time_point<std::chrono::system_clock> start, end;
@@ -139,7 +147,7 @@ int main(int argc, char **argv)
 				/********************************************************************************
 				*** start concolution on gpu                                                  ***
 				********************************************************************************/
-				callingConvolution_shared(dev_cube_wi_out, dev_cube_w_out, dev_cube_wi, dev_cube_w, dev_kernel_xy, kernel_xy_size, dev_kernel_eps, kernel_eps_size, dimensions);
+				callingConvolution_shared(dev_cube_wi_out, dev_cube_w_out, dev_cube_wi, dev_cube_w, dev_kernel_xy, kernel_xy_size, dev_kernel_eps, kernel_eps_size, dimensions, device);
 				    
 				    
 				/********************************************************************************

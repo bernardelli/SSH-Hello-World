@@ -121,14 +121,14 @@ __global__ void convolution_shared_eps(float *output, const float *input, const 
 }
 
 
-void callingConvolution_shared(float *dev_cube_wi_out, float *dev_cube_w_out, float *dev_cube_wi, float *dev_cube_w, const float *dev_kernel_xy, int kernel_xy_size, const float *dev_kernel_eps, int kernel_eps_size, dim3  image_dimensions)
+void callingConvolution_shared(float *dev_cube_wi_out, float *dev_cube_w_out, float *dev_cube_wi, float *dev_cube_w, const float *dev_kernel_xy, int kernel_xy_size, const float *dev_kernel_eps, int kernel_eps_size, dim3  image_dimensions, int device)
 {
 	/**Getting shared memory size and max block size 
 	*/
 
 	//TODO: intitialize this on main
 	cudaDeviceProp deviceProp;
-	cudaGetDeviceProperties(&deviceProp, 2); // device = 0;
+	cudaGetDeviceProperties(&deviceProp, device); // device = 0;
 
 
 
